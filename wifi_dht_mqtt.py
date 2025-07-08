@@ -18,6 +18,8 @@ print("IP:", sta.ifconfig()[0])
 mqtt_client_id = "esp32_dht"
 mqtt_server = "broker.hivemq.com"
 mqtt_topic = "iot/sapto/dht"
+mqtt_topic_temp = "iot/sapto/temp"
+mqtt_topic_hum = "iot/sapto/hum"
 
 client = MQTTClient(mqtt_client_id, mqtt_server)
 client.connect()
@@ -35,6 +37,8 @@ while True:
         msg = "Temp:{}C,Hum:{}%".format(temp, hum)
         print(msg)
         client.publish(mqtt_topic, msg)
+        client.publish(mqtt_topic_temp,str(temp))
+        client.publish(mqtt_topic_hum,str(hum))
     except:
         print("Read or publish error")
     time.sleep(2)
