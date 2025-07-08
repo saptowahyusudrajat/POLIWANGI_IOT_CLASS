@@ -3,7 +3,7 @@ import time
 
 # WiFi credentials
 WIFI_SSID = "InixindoZone"
-WIFI_PASSWORD = "inix2023surabaya"
+WIFI_PASSWORD = "inix2023surabayazjsd"
 
 def connect_wifi():
     # Create station interface
