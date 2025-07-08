@@ -3,29 +3,37 @@ import machine
 import time
 import network
 
-d = dht.DHT11(machine.Pin(4))
+sensor = dht.DHT11(machine.Pin(4))
+
+# WiFi credentials
+WIFI_SSID = "Pixel"
+WIFI_PASSWORD = "saptoganteng"
 
 def connect_wifi():
-    wlan = network.WLAN(network.STA_IF)
-    wlan.active(True)
-    if not wlan.isconnected():
+    # Create station interface
+    sta_if = network.WLAN(network.STA_IF)
+    
+    # Activate the interface
+    if not sta_if.isconnected():
         print("Connecting to WiFi...")
-        wlan.connect('InixindoZone', 'inix2023surabaya')
+        sta_if.active(True)
+        sta_if.connect(WIFI_SSID, WIFI_PASSWORD)
         
-        while not wlan.isconnected():
-            time.sleep(1)
-           
-    if wlan.isconnected():
-        print("Connected. IP:", wlan.ifconfig()[0])
-    else:
-        print("WiFi connection failed.")
+        # Wait for connection
+        while not sta_if.isconnected():
+            print(".", end="")
+            time.sleep(0.5)
+    
+    # Print connection details
+    print("\nConnected!")
+    print("Network config:", sta_if.ifconfig())
 
+# Connect to WiFi
 connect_wifi()
 
 while True:
-    
-    d.measure()
-    print("Temp: ", d.temperature(), "degC")
-    print("Hum: ", d.humidity(), "%")
+    sensor.measure()
+    print("Temp: ", sensor.temperature(), "degC")
+    print("Hum: ", sensor.humidity(), "%")
     time.sleep(1)
     
