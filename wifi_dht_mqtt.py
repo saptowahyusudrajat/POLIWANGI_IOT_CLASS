@@ -34,7 +34,7 @@ while True:
         sensor.measure()
         temp = sensor.temperature()
         hum = sensor.humidity()
-        msg = "Temp:{}C,Hum:{}%".format(temp, hum)
+        msg = "Temp:{},Hum:{}".format(temp, hum)
         print(msg)
         client.publish(mqtt_topic, msg)
         client.publish(mqtt_topic_temp,str(temp))
